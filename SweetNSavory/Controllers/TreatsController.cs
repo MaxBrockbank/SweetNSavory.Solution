@@ -134,5 +134,13 @@ namespace SweetNSavory.Controllers
       return RedirectToAction("Details", new{id=treat.TreatId});
     }
 
+    [HttpPost]
+    public ActionResult DeleteFlavor(int joinId, int TreatId)
+    {
+      var relationship = _db.FlavorTreat.FirstOrDefault(entry=>entry.FlavorTreatId == joinId);
+      _db.FlavorTreat.Remove(relationship);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

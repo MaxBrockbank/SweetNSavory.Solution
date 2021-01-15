@@ -95,5 +95,43 @@ namespace SweetNSavory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    [Authorize]
+    public async Task<ActionResult> AddTreat(int id)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var thisFlavor = _db.Flavors.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(flavor=>flavor.FlavorId == id);
+      if(thisFlavor == null)
+      {
+        return RedirectToAction("Details", new{id=id});
+      }
+      return View(thisFlavor);
+    }
+
+    [HttpPost]
+    public ActionResult AddTreat(Flavor flavor, int TreatId)
+    {
+      if(TreatId != 0)
+      {
+        var relationship = _db.FlavorTreat
+          .Any(entry=>entry.FlavorId == flavor.FlavorId && entry.TreatId == TreatId);
+        if(!relationship)
+        {
+          _db.FlavorTreat.Add(new FlavorTreat(){FlavorId = flavor.FlavorId, TreatId = TreatId});
+        }
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Details", new{id=flavor.FlavorId});
+    }
+
+    [HttpPost]
+    public ActionResult DeleteTreat(int joinId, int FlavorId)
+    {
+      var relationship = _db.FlavorTreat.FirstOrDefault(entry=>entry.FlavorTreatId == joinId);
+      _db.FlavorTreat.Remove(relationship);
+      _db.SaveChanges();
+      return RedirectToAction("Details", new {id=FlavorId});
+    }
   }
 }

@@ -82,6 +82,27 @@ namespace SweetNSavory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Detials", new{id=treat.TreatId});
     }
+
+    [Authorize]
+    public async Task<ActionResult> Delete(int id)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var thisTreat = _db.Treats.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(treat=>treat.TreatId == id);
+      if(thisTreat == null)
+      {
+        return RedirectToAction("Details", new{id=id});
+      }
+      return View(thisTreat);
+    }
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat=>treat.TreatId == id);
+      _db.Treats.Remove(thisTreat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 
 }

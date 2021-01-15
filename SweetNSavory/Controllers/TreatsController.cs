@@ -61,6 +61,27 @@ namespace SweetNSavory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    [Authorize]
+    public async Task<ActionResult> Edit(int id)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var thisTreat = _db.Treats.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(treat=>treat.TreatId == id);
+      if(thisTreat == null)
+      {
+        return RedirectToAction("Details", new{id=id});
+      }
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Treat treat)
+    {
+      _db.Entry(treat).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Detials", new{id=treat.TreatId});
+    }
   }
 
 }

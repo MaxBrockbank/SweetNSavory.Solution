@@ -1,0 +1,14 @@
+@using SweetNSavory.ViewModels
+@model LoginViewModel
+
+<h3>Log in to your account:</h3>
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model=>model.Email)
+  @Html.TextBoxFor(model=>model.Email)
+  
+  @Html.LabelFor(model=>model.Password)
+  @Html.TextBoxFor(model=>model.Password)
+
+  <input type="submit" value="Log in" class="btn btn-info">
+}

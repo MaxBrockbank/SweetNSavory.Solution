@@ -1,0 +1,19 @@
+@using SweetNSavory.ViewModels
+@model RegisterViewModels
+
+<h2>Register new User</h2>
+<hr/>
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model=>model.Email)
+  @Html.TextBoxFor(model=>model.Email)
+
+  @Html.LabelFor(model=>model.Password)
+  @Html.TextBoxFor(model=>model.Password)
+
+  @Html.LabelFor(model=>model.ConfirmPassword)
+  @Html.TextBoxFor(model=>model.ConfirmPassword)
+  
+  <input type="submit" value="Register" class="btn btn-info">
+}
+

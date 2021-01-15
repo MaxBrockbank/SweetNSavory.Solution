@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ToDoList.ViewModels
+namespace SweetNSavory.ViewModels
 {
   public class RegisterViewModel
   {
@@ -11,12 +11,12 @@ namespace ToDoList.ViewModels
 
     [Required]
     [DataType(DataType.Password)]
-    [DisplayName(Name="Password")]
+    [Display(Name="Password")]
     public string Password {get;set;}
 
     [DataType(DataType.Password)]
-    [DisplayName(Name="Confirm Password")]
-    [Compare(Password, ErrorMessage="Passwords do not match. Try again.")]
+    [Display(Name="Confirm Password")]
+    [Compare("Password", ErrorMessage="Passwords do not match. Try again.")]
     public string ConfirmPassword {get;set;}
   }
 }

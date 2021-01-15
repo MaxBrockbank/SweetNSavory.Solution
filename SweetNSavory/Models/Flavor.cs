@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace SweetNSavory.Models
 {
-  public class Flavor()
+  public class Flavor
   {
     public Flavor()
     {
-      this.Treats = new HashSet<FlavorTreat>;
+      this.Treats = new HashSet<FlavorTreat>();
     }
 
     public string Name {get; set;}

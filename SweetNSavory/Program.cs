@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace RecipeBox
+namespace SweetNSavory
 {
   public class Program
   {

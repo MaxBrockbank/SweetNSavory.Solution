@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Mvc;
+using SweetNSavory.Models;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Indentity;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -28,7 +33,7 @@ namespace SweetNSavory.Controllers
     {
       var thisFlavor = _db.Flavors
         .Include(flavor=>flavor.Treats)
-        .ThenInclude(join=>join.Treat);
+        .ThenInclude(join=>join.Treat)
         .FirstOrDefault(flavor=>flavor.FlavorId == id);
       return View(thisFlavor);
     }
@@ -44,7 +49,7 @@ namespace SweetNSavory.Controllers
     [HttpPost]
     public async Task<ActionResult> Create(Flavor flavor)
     {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?Value;
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       flavor.User = currentUser;
       _db.Flavors.Add(flavor);
@@ -53,14 +58,14 @@ namespace SweetNSavory.Controllers
     }
 
     [Authorize]
-    public ActionResult Edit(int id)
+    public async Task<ActionResult> Edit(int id)
     {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?Value;
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisFlavor = _db.Flavors.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(flavor => flavor.FlavorId == id);
       if(thisFlavor == null)
       {
-        return RedirectToAction("Details", new{id=id})
+        return RedirectToAction("Details", new{id=id});
       }
       return View(thisFlavor);
     }
@@ -70,13 +75,13 @@ namespace SweetNSavory.Controllers
     {
       _db.Entry(flavor).State = EntityState.Modified;
       _db.SaveChanges();
-      return RedirectoAction("Index")
+      return RedirectToAction("Index");
     }
 
-    [Authorized]
+    [Authorize]
     public async Task<ActionResult> Delete(int id)
     {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?Value;
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisFlavor = _db.Flavors.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(flavor=>flavor.FlavorId==id);
       return View(thisFlavor);

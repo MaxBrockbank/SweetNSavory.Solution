@@ -1,7 +1,13 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using SweetNSavory.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using SweetNSavory.ViewModels;
 
 namespace SweetNSavory.Controllers
@@ -19,8 +25,11 @@ namespace SweetNSavory.Controllers
       _signInManager = signInManager;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      ViewBag.UserTreats = _db.Treats.Where(entry=>entry.User.Id == currentUser.Id).ToList();
       return View();
     }
 

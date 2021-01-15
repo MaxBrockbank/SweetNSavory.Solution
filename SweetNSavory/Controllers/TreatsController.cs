@@ -36,6 +36,31 @@ namespace SweetNSavory.Controllers
       return View(thisTreat);
     }
     //Authorized Routes
+
+    [Authorize]
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(Treat treat, int FlavorId)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      if(FlavorId != 0)
+      {
+        var relationship = _db.FlavorTreat
+          .Any(entry=>entry.TreatId == treat.TreatId && entry.FlavorId == FlavorId);
+        if(!relationship)
+        {
+          _db.FlavorTreat.Add(new FlavorTreat(){FlavorId = FlavorId, TreatId = treat.TreatId});
+        }
+      }
+      _db.Treats.Add(treat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 
 }

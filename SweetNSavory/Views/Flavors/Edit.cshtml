@@ -1,0 +1,30 @@
+@{
+  Layout="_Layout";
+}
+@using SweetNSavory.Models
+@model SweetNSavory.Models.Flavor
+
+<h3>Edit @Model.Name</h3>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model=>model.Name)
+  @Html.EditorFor(model=>model.Name)
+
+  @if(Model.Treats.Count != 0)
+  {
+    <ul>
+      @foreach(var treat in Model.Treats)
+      {
+        <li>treat.name</li> @using (Html.BeginForm("DeleteTreat", "Flavors"))
+        {
+          <input type="submit" value="Remove" class="btn btn-danger">
+        }
+      }
+    </ul>
+  }
+  <input type="submit" value="Save" class="btn btn-info">
+}
+@Html.ActionLink("Delete Forever", "Delete", new{id=Model.FlavorId})
+<p>@Html.ActionLink("cancel", "Details", new{id=Model.FlavorId})</p>
+

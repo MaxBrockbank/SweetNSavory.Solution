@@ -1,6 +1,12 @@
-
+@{
+  Layout="_Layout";
+}
 
 <h3>Welcome @User.Identity.Name</h3>
+@using (Html.BeginForm("LogOff", "Account"))
+{
+  <input type="submit" value="Log Out" class="btn btn-danger">
+}
 
 @if(ViewBag.UserTreats.Count == 0)
 {
@@ -8,16 +14,11 @@
 }
 else 
 {
-<div class="container">
-  <div class="row">
-    <div class="col-lg-6">
-      <ul>
-        @foreach(var treat in @ViewBag.UserTreats)
-        {
-          <li>@Html.ActionLink($"{treat.Name}", "Details", new{id=treat.TreatId})</li>
-        }
-      </ul>
-    </div>
-  </div>
-</div>
+  <ul>
+    @foreach(var treat in @ViewBag.UserTreats)
+    {
+      <li>@Html.ActionLink($"{treat.Name}", "Details", "Treats",new{id=treat.TreatId})</li>
+    }
+  </ul>
 }
+

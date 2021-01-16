@@ -1,0 +1,28 @@
+@{
+  Layout="_Layout";
+}
+
+@using SweetNSavory.Models
+@model SweetNSavory.Models.Flavor
+
+<h3>@Model.Name</h3>
+@if(User.Identity.IsAuthenticated)
+{
+  <p>@Html.ActionLink($"Edit {Model.Name}", "Edit","Flavors" ,new{id=Model.FlavorId})</p>
+  <p>@Html.ActionLink($"Add treat to {Model.Name}", "Addtreat","Flavor" ,new{id=Model.FlavorId})</p>
+}
+
+@if(Model.Treats.Count == 0)
+{
+  <p>This flavor has no treats apart of it yet.</p>
+}
+else
+{
+  <p>Treats:</p>
+  <ul>
+    @foreach(var treat in Model.Treats)
+    {
+      <li>@Html.ActionLink($"{treat.Treat.Name}", "Details", "Treats", new {id=treat.Treat.TreatId})</li>
+    }
+  </ul>
+}

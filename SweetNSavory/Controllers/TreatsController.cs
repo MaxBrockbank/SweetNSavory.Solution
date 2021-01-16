@@ -48,6 +48,7 @@ namespace SweetNSavory.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
+      treat.User = currentUser;
       if(FlavorId != 0)
       {
         var relationship = _db.FlavorTreat
@@ -78,9 +79,12 @@ namespace SweetNSavory.Controllers
     [HttpPost]
     public ActionResult Edit(Treat treat)
     {
-      _db.Entry(treat).State = EntityState.Modified;
-      _db.SaveChanges();
-      return RedirectToAction("Detials", new{id=treat.TreatId});
+      if(_db.Entry(treat).State == EntityState.Modified)
+      {
+        _db.Entry(treat).State = EntityState.Modified;
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Index");
     }
 
     [Authorize]
@@ -115,6 +119,7 @@ namespace SweetNSavory.Controllers
         return RedirectToAction("Details", new{id=id});
       }
       ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
+      ViewBag.Flavors= _db.Flavors.ToList();
       return View(thisTreat);
     }
 

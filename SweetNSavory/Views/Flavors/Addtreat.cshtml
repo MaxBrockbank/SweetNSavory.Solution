@@ -1,0 +1,21 @@
+@{
+  Layout="_Layout";
+}
+
+@using SweetNSavory.Models
+@model SweetNSavory.Models.Flavor
+
+<h3>Add a Treat</h3>
+
+@if(ViewBag.Treats.Count == 0)
+{
+  <p>There aren't any flavors to add yet.</p>
+  @Html.ActionLink("Create a flavor", "Create", "Treats")
+}
+else
+{
+  @using (Html.BeginForm())
+  {
+    @Html.DropDownList("TreatsId");
+  }
+}

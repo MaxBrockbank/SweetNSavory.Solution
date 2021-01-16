@@ -23,6 +23,8 @@ namespace SweetNSavory.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
+      ViewBag.Treats = _db.Treats.ToList();
+      ViewBag.Flavors = _db.Flavors.ToList();
       return View();
     }
   }

@@ -1,0 +1,13 @@
+@{
+  Layout="_Layout";
+}
+
+@using SweetNSavory.Models
+@model SweetNSavory.Models.Treat
+
+<h3>Are you sure you want to delete this tasty lil' thing?</h3>
+@using (Html.BeginForm())
+{
+  <input type="submit" value="Yes, I'm sure" class="btn btn-danger">
+}
+@Html.ActionLink("cancel", "Details", new{id=Model.TreatId})

@@ -1,9 +1,13 @@
+@{
+  Layout="_Layout";
+}
+
 @using SweetNSavory.ViewModels
 @model RegisterViewModel
 
 <h2>Register new User</h2>
 <hr/>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
   @Html.LabelFor(model=>model.Email)
   @Html.TextBoxFor(model=>model.Email)

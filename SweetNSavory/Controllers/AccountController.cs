@@ -39,17 +39,18 @@ namespace SweetNSavory.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register(RegisterViewModel model)
+    public async Task<ActionResult> Register (RegisterViewModel model)
     {
-      var user  = new ApplicationUser {UserName = model.Email};
-      IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-      if(result.Succeeded){
-        return RedirectToAction("Index");
-      } 
-      else
-      {
-        return View();
-      }
+        var user = new ApplicationUser { UserName = model.Email };
+        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Login");
+        }
+        else
+        {
+            return View();
+        }
     }
 
     public ActionResult Login()
@@ -75,7 +76,7 @@ namespace SweetNSavory.Controllers
     public async Task<ActionResult> LogOff()
     {
       await _signInManager.SignOutAsync();
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", "Home");
     }
   }
 }

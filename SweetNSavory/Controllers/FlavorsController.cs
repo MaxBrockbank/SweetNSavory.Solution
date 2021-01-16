@@ -29,7 +29,7 @@ namespace SweetNSavory.Controllers
       return View(_db.Flavors.ToList());
     }
 
-    public ActionResult Detials(int id)
+    public ActionResult Details(int id)
     {
       var thisFlavor = _db.Flavors
         .Include(flavor=>flavor.Treats)
@@ -73,8 +73,11 @@ namespace SweetNSavory.Controllers
     [HttpPost]
     public ActionResult Edit(Flavor flavor )
     {
-      _db.Entry(flavor).State = EntityState.Modified;
-      _db.SaveChanges();
+      if(_db.Entry(flavor).State == EntityState.Modified)
+      {
+        _db.Entry(flavor).State = EntityState.Modified;
+        _db.SaveChanges();
+      }
       return RedirectToAction("Index");
     }
 
@@ -111,6 +114,7 @@ namespace SweetNSavory.Controllers
         return RedirectToAction("Details", new{id=id});
       }
       ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
+      ViewBag.Treats = _db.Treats.ToList();
       return View(thisFlavor);
     }
 

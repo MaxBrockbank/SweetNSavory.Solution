@@ -9,7 +9,7 @@ using SweetNSavory.Models;
 namespace SweetNSavory.Migrations
 {
     [DbContext(typeof(SweetNSavoryContext))]
-    [Migration("20210115215840_Initial")]
+    [Migration("20210116021735_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -84,6 +84,10 @@ namespace SweetNSavory.Controllers
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisFlavor = _db.Flavors.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(flavor=>flavor.FlavorId==id);
+      if(thisFlavor == null)
+      {
+        return RedirectToAction("Details", new{id=id});
+      }
       return View(thisFlavor);
     }
 
@@ -106,6 +110,7 @@ namespace SweetNSavory.Controllers
       {
         return RedirectToAction("Details", new{id=id});
       }
+      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
       return View(thisFlavor);
     }
 

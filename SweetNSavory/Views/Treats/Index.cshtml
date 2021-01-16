@@ -1,0 +1,18 @@
+@using SweetNSavory.Models
+@model List<SweetNSavory.Models.Treat>
+
+
+<h3>Our Current Treats</h3>
+@if(Model.Count == 0)
+{
+  <p>Currently there are no treats.</p>
+}
+else
+{
+<ul>
+@foreach(var treat in Model)
+{
+  <li>@Html.ActionLink($"{treat.Name}", "Details", new{id=treat.TreatId})</li>
+}
+</ul>
+}

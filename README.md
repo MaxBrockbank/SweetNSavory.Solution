@@ -1,4 +1,4 @@
-<h1 align="center">~Dr.Sillystringz's Factory~</h1>
+<h1 align="center">~SweetNSavory~</h1>
 <div align="center">
 <img src="https://github.com/MaxBrockbank.png" width="200px" height="auto" >
 </div>

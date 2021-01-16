@@ -3,7 +3,7 @@
 <img src="https://github.com/MaxBrockbank.png" width="200px" height="auto" >
 </div>
 <p align="center">Authored by Max Brockabnk</p>
-<p align="center">Updated on Friday, January 8th, 2021</p>
+<p align="center">Updated on Friday, January 15th, 2021</p>
 
 # Description
 This project is a practice in using C# ASP.NET Core along with Entity Framework Core, Identity, MySQL and MySQL Workbench to create a web app for a our good friend Pierre's Bakery to market the differnt flavors of treats and the different treats that he serves.
@@ -49,6 +49,7 @@ This project is a practice in using C# ASP.NET Core along with Entity Framework 
 * ASP.NET Core
 * ASP.NET Core Razor Pages
 * Entity Framework Core
+* Identity Authentication
 * MySQL
 
 ## Known Bugs

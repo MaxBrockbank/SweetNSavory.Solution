@@ -8,6 +8,8 @@
 
 @using (Html.BeginForm("Edit", "Treats"))
 {
+  @Html.HiddenFor(model=>model.TreatId);
+  
   @Html.LabelFor(model=>model.Name)
   @Html.EditorFor(model=>model.Name)
 

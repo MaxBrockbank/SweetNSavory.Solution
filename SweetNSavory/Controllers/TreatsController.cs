@@ -3,6 +3,7 @@ using SweetNSavory.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -77,14 +78,14 @@ namespace SweetNSavory.Controllers
     }
 
     [HttpPost]
-    public ActionResult Edit(Treat treat)
+    public ActionResult Edit(Treat treat, int TreatId)
     {
-      if(_db.Entry(treat).State == EntityState.Modified)
+      if(treat != null)
       {
         _db.Entry(treat).State = EntityState.Modified;
         _db.SaveChanges();
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Details", new {id=TreatId});
     }
 
     [Authorize]
@@ -114,10 +115,10 @@ namespace SweetNSavory.Controllers
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisTreat = _db.Treats.Where(entry=>entry.User.Id == currentUser.Id).FirstOrDefault(treat=>treat.TreatId == id);
-          if(thisTreat == null)
-      {
-        return RedirectToAction("Details", new{id=id});
-      }
+        if(thisTreat == null)
+        {
+          return RedirectToAction("Details", new{id=id});
+        }
       ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
       ViewBag.Flavors= _db.Flavors.ToList();
       return View(thisTreat);

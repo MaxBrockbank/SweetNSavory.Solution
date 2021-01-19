@@ -71,14 +71,14 @@ namespace SweetNSavory.Controllers
     }
 
     [HttpPost]
-    public ActionResult Edit(Flavor flavor )
+    public ActionResult Edit(Flavor flavor, int FlavorId )
     {
-      if(_db.Entry(flavor).State == EntityState.Modified)
+      if(flavor != null)
       {
         _db.Entry(flavor).State = EntityState.Modified;
         _db.SaveChanges();
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Details", new{id=FlavorId});
     }
 
     [Authorize]

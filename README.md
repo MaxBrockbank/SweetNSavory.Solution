@@ -21,7 +21,8 @@ This project is a practice in using C# ASP.NET Core along with Entity Framework 
 2. To clone the repo you'll want to click on the clipboard icon next to where you see a URL in a text input. This will copy this url for the repo to your clipboard
 3. Open your computer termianl and navigate to whichever directory you'd like this project to live in.
 4. Then run the command `git clone (Paste URL here)`. Additionally if you'd like to give this project's root directory a specific name you can run `git clone (Paste URL here) (New directory name)`. (Do not include the parens in these commands)
-5. Run `SweetNSavory.Solution` or `cd (Whatever you changed the directory name to)` to then navigate to the project root directory.
+5. Set up the `MySQL database` and `appsettings.json` file (see the following sets of instructions on how to do this).
+6. Then navigate to the project directory `cd SweetNSavory`, then run the build command `dotnet build` and the run command `dotnet run` to start up the local server and view this project.
 
 #### Generate MySQL Database Using Entity Framework Core
 1. In your terminal navigate to the SweetNSavory.Solution/SweetNSavory directory. `cd SweetNSavory`.

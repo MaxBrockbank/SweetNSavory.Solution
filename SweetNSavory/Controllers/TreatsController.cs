@@ -125,19 +125,19 @@ namespace SweetNSavory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddFlavor(Treat treat, int FlavorId)
+    public ActionResult AddFlavor(int TreatId, int FlavorId)
     {
       if(FlavorId != 0)
       {
         var relationship = _db.FlavorTreat
-          .Any(entry=>entry.TreatId == treat.TreatId && entry.FlavorId == FlavorId);
+          .Any(entry=>entry.TreatId == TreatId && entry.FlavorId == FlavorId);
         if(!relationship)
         {
-          _db.FlavorTreat.Add(new FlavorTreat(){TreatId = treat.TreatId, FlavorId = FlavorId});
+          _db.FlavorTreat.Add(new FlavorTreat(){TreatId = TreatId, FlavorId = FlavorId});
+          _db.SaveChanges();
         }
       }
-      _db.SaveChanges();
-      return RedirectToAction("Details", new{id=treat.TreatId});
+      return RedirectToAction("Details", new{id=TreatId});
     }
 
     [HttpPost]

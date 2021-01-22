@@ -29,7 +29,6 @@ namespace SweetNSavory.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      ViewBag.UserTreats = _db.Treats.Where(entry=>entry.User.Id == currentUser.Id).ToList();
       return View();
     }
 

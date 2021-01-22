@@ -9,7 +9,7 @@
 @if(User.Identity.IsAuthenticated)
 {
   <p>@Html.ActionLink($"Edit {Model.Name}", "Edit","Flavors" ,new{id=Model.FlavorId})</p>
-  <p>@Html.ActionLink($"Add treat to {Model.Name}", "Addtreat","Flavor" ,new{id=Model.FlavorId})</p>
+  <p>@Html.ActionLink($"Add treat to {Model.Name}", "Addtreat","Flavors" ,new{id=Model.FlavorId})</p>
 }
 
 @if(Model.Treats.Count == 0)

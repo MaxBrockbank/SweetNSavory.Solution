@@ -8,17 +8,3 @@
   <input type="submit" value="Log Out" class="btn btn-danger">
 }
 
-@if(ViewBag.UserTreats.Count == 0)
-{
-  <li>You haven't added any treats yet.</li>
-}
-else 
-{
-  <ul>
-    @foreach(var treat in @ViewBag.UserTreats)
-    {
-      <li>@Html.ActionLink($"{treat.Name}", "Details", "Treats",new{id=treat.TreatId})</li>
-    }
-  </ul>
-}
-

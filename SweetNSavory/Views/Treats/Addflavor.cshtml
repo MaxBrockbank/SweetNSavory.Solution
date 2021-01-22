@@ -16,6 +16,7 @@ else
 {
   @using (Html.BeginForm())
   {
+    @Html.HiddenFor(model=>model.TreatId)
     @Html.DropDownList("FlavorId");
     <input type="submit" value="Add" class="btn btn-info">
   }
